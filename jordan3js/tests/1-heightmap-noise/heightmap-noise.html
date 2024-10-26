@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heightmap Example</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+            "three/addons/controls/OrbitControls.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js"
+        }
+        }
+    </script>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/simplex-noise@latest/simplex-noise.min.js"></script>
+    <script type="module" src="heightmap-noise.js"></script>
+</body>
+</html>

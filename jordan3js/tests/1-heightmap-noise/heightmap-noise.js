@@ -186,11 +186,126 @@ directionalLight2.shadow.mapSize.height = 2048; // Increase shadow map height
 scene.add(directionalLight2);
 
 
-// const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
-// scene.add(ambientLight);
+const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+scene.add(ambientLight);
 
-// Generate the heightmap
+// =================================================================
+// GENERATE ARENA
+// =================================================================
+
+// 1. CYLINDER WALLS
+
+// Function to create short wall cylinders
+function createWalls() {
+    console.log("Creating Walls");
+    const wallHeight = 255; // Height of the walls (thickness)
+    const wallRadius = 6.0; // Radius of the walls (length)
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Gray color
+
+    // Create walls at the edges of the arena
+    const wallPositions = [
+        { side: 1, x: 0, z: -height / 2 }, // Bottom wall
+        { side: 2, x: 0, z: height / 2 },  // Top wall
+        { side: 3, x: -width / 2, z: 0 },  // Left wall
+        { side: 4, x: width / 2, z: 0 }     // Right wall
+    ];
+
+    wallPositions.forEach(pos => {
+        const wallGeometry = new THREE.CylinderGeometry(wallRadius, wallRadius, wallHeight, 32);
+        const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+        wall.position.set(pos.x, wallHeight / 2, pos.z); // Position the wall
+        wall.rotation.z = Math.PI / 2; // Rotate to lay it flat
+        wall.position.y = 5;
+        // Rotate based on wall side
+        if (pos.side === 3 || pos.side === 4) {
+            wall.rotation.y = Math.PI / 2; // Rotate for horizontal walls
+        }
+        
+        wall.castShadow = true; // Enable shadow casting for the wall
+        wall.receiveShadow = true; // Enable shadow receiving for the wall
+        scene.add(wall);
+    });
+
+}
+
+// 2a. DROP SAMPLE BEACON CYAN
+function dropColorBlockBeaconCyan() {
+    const boxWidth = 10; // Width of the box
+    const boxHeight = 10; // Height of the box
+    const boxDepth = 2; // Depth of the box
+
+    // Create box geometry
+    const boxGeometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+    // Create materials for the box sides
+    const materials = [
+        new THREE.MeshStandardMaterial({ color: 0x00FFFF }), // Cyan
+        new THREE.MeshStandardMaterial({ color: 0x00FFFF }), // Cyan
+        new THREE.MeshStandardMaterial({ color: 0x00FFFF }), // Cyan
+        new THREE.MeshStandardMaterial({ color: 0x00FFFF }), // Cyan
+        new THREE.MeshStandardMaterial({ color: 0x00FFFF }), // Cyan
+        new THREE.MeshStandardMaterial({ color: 0x00FFFF })  // Cyan
+    ];
+
+    // Create a mesh with the geometry and the materials
+    const box = new THREE.Mesh(boxGeometry, materials);
+
+    // Position the box
+    box.position.set(100, 8, 122); // Adjust the position as needed
+
+    // Enable shadows if needed
+    box.castShadow = true; // Enable shadow casting for the box
+    box.receiveShadow = true; // Enable shadow receiving for the box
+
+    // Add the box to the scene
+    scene.add(box);
+}
+
+// 2b. DROP SAMPLE BEACON MAGENTA
+function dropColorBlockBeaconMagenta() {
+    const boxWidth = 10; // Width of the box
+    const boxHeight = 10; // Height of the box
+    const boxDepth = 2; // Depth of the box
+
+    // Create box geometry
+    const boxGeometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+    // Create materials for the box sides
+    const materials = [
+        new THREE.MeshStandardMaterial({ color: 0xFF00FF }), // Magenta
+        new THREE.MeshStandardMaterial({ color: 0xFF00FF }), // Magenta
+        new THREE.MeshStandardMaterial({ color: 0xFF00FF }), // Magenta
+        new THREE.MeshStandardMaterial({ color: 0xFF00FF }), // Magenta
+        new THREE.MeshStandardMaterial({ color: 0xFF00FF }), // Magenta
+        new THREE.MeshStandardMaterial({ color: 0xFF00FF })  // Magenta
+    ];
+
+    // Create a mesh with the geometry and the materials
+    const box = new THREE.Mesh(boxGeometry, materials);
+
+    // Position the box
+    box.position.set(122, 8, 80); // Adjust the position as needed
+    box.rotation.y = Math.PI/2;
+
+    // Enable shadows if needed
+    box.castShadow = true; // Enable shadow casting for the box
+    box.receiveShadow = true; // Enable shadow receiving for the box
+
+    // Add the box to the scene
+    scene.add(box);
+}
+
+
+
+// ___________________
+// 
+// Generate the Arena
+//
 generateHeightmap();
+createWalls();
+dropColorBlockBeaconCyan()
+dropColorBlockBeaconMagenta()
+// ___________________
 
 /*================================================================
 

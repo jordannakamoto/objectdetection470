@@ -39,7 +39,7 @@ const material = new THREE.MeshStandardMaterial({ map: texture, wireframe: false
 const plane = new THREE.Mesh(geometry, material);
 plane.receiveShadow = true; // Make sure the plane can receive shadows
 plane.rotation.x = -Math.PI / 2; // Rotate the plane to make it horizontal
-scene.add(plane);1
+scene.add(plane);
 
 // Create a canvas for noise display
 const noiseCanvas = document.getElementById('noiseCanvas');
